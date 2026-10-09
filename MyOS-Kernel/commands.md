@@ -13,9 +13,9 @@ gcc -c Boot/head.S -o Esecutables/head.o
 ```
 
 **3. Link the kernel**
-```bash
-ld -n -T linker.ld -o Esecutables/kernel.elf Esecutables/head.o Esecutables/kernel.o
-```
+ld --no-warn-rwx-segments -T linker.ld \
+  -o Esecutables/kernel.elf \
+  Esecutables/head.o Esecutables/kernel.o
 
 **4. Check Multiboot2 compatibility**
 ```bash
