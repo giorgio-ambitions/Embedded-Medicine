@@ -9,7 +9,7 @@ gcc -c kernel.c -o Esecutables/kernel.o
 
 **2. Compile the assembly boot file**
 ```bash
-gcc -c Boot/head.S -o Esecutables/head.o
+gcc -c Boot/head.s -o Esecutables/head.o
 ```
 
 **3. Link the kernel**
