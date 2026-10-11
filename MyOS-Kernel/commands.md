@@ -50,6 +50,7 @@ An exit status of `0` means the check passed. Stop if it reports an error.
 Ensure `iso/boot/grub/grub.cfg` contains:
 
 ```grub
+cat > iso/boot/grub/grub.cfg <<'EOF'
 set timeout=0
 set default=0
 
@@ -57,6 +58,7 @@ menuentry "MyPersonalOS" {
     multiboot2 /boot/kernel.elf
     boot
 }
+EOF
 ```
 
 ### 8. Copy the kernel into the ISO directory
