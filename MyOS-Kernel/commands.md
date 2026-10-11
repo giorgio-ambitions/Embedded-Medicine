@@ -1,40 +1,90 @@
 ## Build MyPersonalOS
 
-Run these commands from the project directory.
+Run these commands from the project root directory.
 
-**1. Compile the kernel**
+### 1. Create the required directories
+
+```bash
+mkdir -p Esecutables iso/boot/grub
+```
+
+### 2. Compile the kernel
+
 ```bash
 gcc -c kernel.c -o Esecutables/kernel.o
 ```
 
-**2. Compile the assembly boot file**
+### 3. Compile the assembly boot file
+
+The source file is named `Boot/head.s` (lowercase `s`).
+
 ```bash
 gcc -c Boot/head.s -o Esecutables/head.o
 ```
 
-**3. Link the kernel**
-```
+### 4. Link the kernel
+
+```bash
 ld --no-warn-rwx-segments -T linker.ld \
   -o Esecutables/kernel.elf \
   Esecutables/head.o Esecutables/kernel.o
 ```
 
-**4. Check Multiboot2 compatibility**
+### 5. Check Multiboot2 compatibility
+
 ```bash
 grub-file --is-x86-multiboot2 Esecutables/kernel.elf
 ```
 
-**5. Copy the kernel into the ISO directory**
+Stop if this command reports an error. To verify the result explicitly:
+
+```bash
+grub-file --is-x86-multiboot2 Esecutables/kernel.elf
+echo $?
+```
+
+An exit status of `0` means the check passed.
+
+### 6. Create the GRUB configuration
+
+Ensure `iso/boot/grub/grub.cfg` contains:
+
+```grub
+set timeout=0
+set default=0
+
+menuentry "MyPersonalOS" {
+    multiboot2 /boot/kernel.elf
+    boot
+}
+```
+
+### 7. Copy the kernel into the ISO directory
+
 ```bash
 cp Esecutables/kernel.elf iso/boot/kernel.elf
 ```
 
-**6. Create the ISO image**
+### 8. Create the ISO image
+
 ```bash
 grub-mkrescue -o Esecutables/MyPersonalOS.iso iso
 ```
 
-**7. Check the ISO file**
+### 9. Verify the ISO file
+
 ```bash
 ls -lh Esecutables/MyPersonalOS.iso
 ```
+
+The ISO should be created at `Esecutables/MyPersonalOS.iso`.
+
+### 10. Optional: Test with QEMU
+
+If QEMU is installed, run:
+
+```bash
+qemu-system-i386 -cdrom Esecutables/MyPersonalOS.iso
+```
+
+A successful ISO build does not guarantee that the kernel boots correctly, so test it in an emulator before considering the build complete.
