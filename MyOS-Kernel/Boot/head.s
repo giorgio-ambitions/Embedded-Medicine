@@ -1,6 +1,6 @@
 .code32
 
-.section .multiboot
+.section .multiboot, "a"
 .align 8
 
 multiboot_header:
@@ -40,6 +40,7 @@ _start:
      * Preserve EBX because kernel_main() will eventually need it.
      */
     mov %ebx, %esi
+    mov %eax, %ebp          /* keep the magic: memory_init() needs it */
 
     /*
      * Temporary stack.
@@ -274,7 +275,8 @@ long_mode_entry:
      *
      *     RDI = Multiboot information pointer
      */
-    mov %rsi, %rdi
+    mov %ebp, %edi          /* arg1: Multiboot2 magic (saved from EAX) */
+    mov %esi, %esi          /* arg2: Multiboot2 info pointer, zero-extended into RSI */
 
     /*
      * Call C kernel.
@@ -326,8 +328,8 @@ gdt_descriptor:
  * Page tables
  * ============================================================================
  */
+.section .pgtable, "aw", @nobits
 
-.section .pgtable
 .align 4096
 
 page_table_l4:
