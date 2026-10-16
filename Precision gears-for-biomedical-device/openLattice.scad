@@ -182,3 +182,4 @@ else {
     // An invalid mode produces a visible diagnostic object.
     %cube([5, 5, 5], center = true);
 }
+
