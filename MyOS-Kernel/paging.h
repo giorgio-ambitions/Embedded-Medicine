@@ -8,4 +8,4 @@ uint64_t paging_read_cr3(void);
 uint64_t paging_read_cr4(void);
 int paging_cpu_supports_la57(void);
 
-#endif
+#endif /* PAGING_H */
