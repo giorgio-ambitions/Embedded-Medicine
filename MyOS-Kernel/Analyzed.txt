@@ -1,0 +1,28 @@
+Which of the following elements should I analyze next to improve the security of my Linux-based operating system intended for use in medical devices, and what about security suites?
+
+Actually I have created:
+W.
+5 directories, 14 files
+What is the next file I need to use to integrate it with the files I have created?
+
+So, what does this file add?
+Create an OS only with an editor and access to medical devices for GUI interfaces 
+Which I have already analized:
+This is currently the file I could use to make chain:
+linker.ld
+
+Which other file should I use as a reference ?
+arch/x86/boot/compressed/head_64.S
+arch/x86/boot/cpu.c
+arch/x86/boot/memory.c
+arch/x86/boot/startup/
+arch/x86/boot/compressed/pgtable_64.c
+arch/x86/boot/startup/la57toggle.S
+arch/x86/boot/compressed/misc.c
+
+Give me an exaustive practical integration with logical explanation
+
+And you're even telling me how many lines a file should have.
+What are the first APIs I can integrate right away with an interaction on my body?
+Even explosively in my body, feeling tiny parks  like interactions in my body ?
+So, how do I integrate this file—as currently written—given these compilation commands?
